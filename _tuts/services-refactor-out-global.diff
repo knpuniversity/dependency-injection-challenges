@@ -41,11 +41,14 @@ index 0000000..2fb6424
 +}
 diff --git a/sendHappy.php b/sendHappy.php
 new file mode 100644
-index 0000000..0d89752
+index 0000000..3e85a8c
 --- /dev/null
 +++ b/sendHappy.php
-@@ -0,0 +1,8 @@
+@@ -0,0 +1,11 @@
 +<?php
++
++require_once 'EmailAddressLoader.php';
++require_once 'HappyMessageSender.php';
 +
 +$emailLoader = new EmailAddressLoader();
 +$GLOBALS['emailLoader'] = $emailLoader;

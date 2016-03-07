@@ -23,11 +23,11 @@ index 2fb6424..0e61e29 100644
              // just print for testing
              echo 'I hope you\'re having a GREAT day '.$email.'<hr/>';
 diff --git a/sendHappy.php b/sendHappy.php
-index 0d89752..725008c 100644
+index 3e85a8c..bd8d280 100644
 --- a/sendHappy.php
 +++ b/sendHappy.php
-@@ -1,8 +1,6 @@
- <?php
+@@ -4,8 +4,6 @@ require_once 'EmailAddressLoader.php';
+ require_once 'HappyMessageSender.php';
  
  $emailLoader = new EmailAddressLoader();
 -$GLOBALS['emailLoader'] = $emailLoader;
