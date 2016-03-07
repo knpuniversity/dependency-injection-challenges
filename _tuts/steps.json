@@ -1,0 +1,20 @@
+{
+    "steps": [
+        {
+            "id": "start",
+            "name": "start",
+            "description": null
+        },
+        {
+            "id": "services-refactor-out-global",
+            "name": "Services: Refactor out global",
+            "description": null
+        },
+        {
+            "id": "services-refactor-out-global-solution",
+            "name": "Services: Refactor out global (solution)",
+            "description": null
+        }
+    ],
+    "sha": "742153100305e59e6b9bf43d9f799a19543d3dd5"
+}

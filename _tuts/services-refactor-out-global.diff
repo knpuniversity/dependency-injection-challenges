@@ -1,0 +1,58 @@
+diff --git a/EmailAddressLoader.php b/EmailAddressLoader.php
+new file mode 100644
+index 0000000..b759377
+--- /dev/null
++++ b/EmailAddressLoader.php
+@@ -0,0 +1,14 @@
++<?php
++
++class EmailAddressLoader
++{
++    public function getAllEmails()
++    {
++        // a class to fake loading emails (e.g. from a database)
++        return array(
++            'iluvhappyemails@symfony.com',
++            'grumpy_dude@yahoo.com',
++            'sunshine_gurl@gmail.com',
++        );
++    }
++}
+diff --git a/HappyMessageSender.php b/HappyMessageSender.php
+new file mode 100644
+index 0000000..2fb6424
+--- /dev/null
++++ b/HappyMessageSender.php
+@@ -0,0 +1,15 @@
++<?php
++
++class HappyMessageSender
++{
++    public function sendHappiness()
++    {
++        global $emailLoader;
++
++        $emails = $emailLoader->getAllEmails();
++        foreach ($emails as $email) {
++            // just print for testing
++            echo 'I hope you\'re having a GREAT day '.$email.'<hr/>';
++        }
++    }
++}
+diff --git a/sendHappy.php b/sendHappy.php
+new file mode 100644
+index 0000000..3e85a8c
+--- /dev/null
++++ b/sendHappy.php
+@@ -0,0 +1,11 @@
++<?php
++
++require_once 'EmailAddressLoader.php';
++require_once 'HappyMessageSender.php';
++
++$emailLoader = new EmailAddressLoader();
++$GLOBALS['emailLoader'] = $emailLoader;
++
++$happyMessageSender = new HappyMessageSender();
++
++$happyMessageSender->sendHappiness();
