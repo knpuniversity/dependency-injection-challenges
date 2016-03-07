@@ -15,9 +15,6 @@ services_refactoroutglobalcoding:
         editor: ~
         browser:
             default_uri: sendHappy.php
-    # TODO Setup context:
-    #$context->requireFile('EmailAddressLoader.php');
-    #$context->requireFile('HappyMessageSender.php');
     grading:
         look_for_global:
             type: php
