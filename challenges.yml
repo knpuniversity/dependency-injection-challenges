@@ -30,19 +30,19 @@ services_refactoroutglobalcoding:
             failure: Be sure you give the `__construct()` method  of `HappyMessageSender` class exactly one argument called `$emailLoader`.
         assert_parameter_name:
             type: php
-            assertTrue: reflection_class('\HappyMessageSender').getMethod('__construct').getParameters()[0]->getName() == 'emailLoader'
+            assertTrue: reflection_class('\HappyMessageSender').getMethod('__construct').getParameters()[0].getName() == 'emailLoader'
             failure: Though you can really call it anything, let's call the argument to `__construct()` method of `HappyMessageSender` class `$emailLoader` for clarity.
         look_for_text:
             type: http
-            assertTrue: body() matches /GREAT day/
+            assertTrue: body() matches "/GREAT day/"
             failure: I don't see the "I hope you're having a GREAT day" message being printed!?
         look_for_email:
             type: http
-            assertTrue: body() matches /iluvhappyemails@symfony.com/
+            assertTrue: body() matches "/iluvhappyemails@symfony.com/"
             failure: I don't see the "iluvhappyemails@symfony.com" email being printed!?
         look_for_globals:
             type: php
-            assertTrue: input("sendHappy.php") matches "/\$GLOBALS/"
+            assertFalse: input("sendHappy.php") matches "/\$GLOBALS/"
             failure: Get rid of the `$GLOBALS` in `sendHappy.php` - we don't need that anymore (yay!).
 
 services_whatswrongwithglobalmc:
