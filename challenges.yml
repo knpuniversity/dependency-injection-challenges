@@ -18,7 +18,7 @@ services_refactoroutglobalcoding:
     grading:
         look_for_global:
             type: php
-            assertFalse: input("HappyMessageSender.php") matches "/global/"
+            assertFalse: inputContains("HappyMessageSender.php", "global")
             failure: Remove the `global` from `HappyMessageSender` class by passing the `$emailLoader` through the `__construct()` method.
         look_for_constructor:
             type: php
@@ -42,7 +42,7 @@ services_refactoroutglobalcoding:
             failure: I don't see the "iluvhappyemails@symfony.com" email being printed!?
         look_for_globals:
             type: php
-            assertFalse: input("sendHappy.php") matches "/\$GLOBALS/"
+            assertFalse: inputContains("sendHappy.php", "\$GLOBALS")
             failure: Get rid of the `$GLOBALS` in `sendHappy.php` - we don't need that anymore (yay!).
 
 services_whatswrongwithglobalmc:
