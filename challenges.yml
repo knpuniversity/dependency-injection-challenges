@@ -5,7 +5,7 @@ services_refactoroutglobalcoding:
         Help out Bob by showing him how to correctly pass the
         `$emailRepository` object via dependency injection so that
         the dreaded `global` isn't needed!
-    step: ~
+    step: services-refactor-out-global
     files:
         sendHappy.php: ~
         HappyMessageSender.php: ~
