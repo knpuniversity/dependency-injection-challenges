@@ -1,14 +1,14 @@
 services_refactoroutglobalcoding:
     question: >
         The intern (Bob) is *awesome*. Or so you thought! Until you
-        see this code, which uses a `global` variable! The horror! Help out Bob:
-
-        1. Use dependency injection to update `HappyMessageSender` and remove the
-           need for the dreaded `global` keyword.
-
-        2. Update `sendHappy.php` accordingly to pass in `$emailLoader`.
-
-        3. Refresh to make sure everything still works!
+        see this code, which uses a `global` variable! The horror! It's up to you
+        to show bob the better way!
+    question_steps:
+        - >
+          Use dependency injection to update `HappyMessageSender` and remove
+          the need for the dreaded `global` keyword.
+        - Update `sendHappy.php` accordingly to pass in `$emailLoader`.
+        - Refresh to make sure everything still works!
     step: services-refactor-out-global
     files:
         sendHappy.php: ~
