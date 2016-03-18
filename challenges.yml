@@ -1,8 +1,8 @@
 services_refactoroutglobalcoding:
     question: >
-        The intern (Bob) is *awesome*. Or so you thought! Until you
+        The newest intern, Kylo Ren, is *awesome*. Or so you thought! Until you
         see this code, which uses a `global` variable! The horror! It's up to you
-        to show bob the better way!
+        to show young Kylo a better way!
     question_steps:
         - >
           Use dependency injection to update `HappyMessageSender` and remove
