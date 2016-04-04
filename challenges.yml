@@ -1,3 +1,4 @@
+# Services
 services_refactoroutglobalcoding:
     question: |
         The newest intern, Kylo Ren, is *awesome*. Or so you thought! Until you
@@ -73,4 +74,144 @@ services_whatswrongwithglobalmc:
                 c: Globals are not as performant as using dependency injection.
                 d: The `$GLOBALS` variable is available when using a web server, but *not* when running command-line tasks. This makes your code very breakable if you want to use the same code to do batch processing jobs.
             correct: b
-    grading: []
+
+# Injection Interfaces
+injectioninterfaces_injectloggercoding:
+    question: |
+        When we send our happy messages, we also want to log all
+        the people that we're emailing. To do that, we've created
+        a new `Logger` class.
+    question_steps:
+        - Create a new instance of `Logger`.
+        - Pass it into the `HappyMessageSender`.
+        - Inside the `foreach`, log the email address of each person you're greeting.
+    step: injection-interfaces-inject-logger
+    files:
+        sendHappy.php: ~
+        HappyMessageSender.php: ~
+        EmailAddressLoader.php:
+            read_only: true
+        Logger.php:
+            read_only: true
+    features:
+        editor: ~
+        browser:
+            default_uri: sendHappy.php
+    grading: ~
+
+injectioninterfaces_injectlogpathtotheloggercoding:
+    question: |
+        Logging, check! But now we have a problem. When we deploy
+        to production, we will want to log to a different file. But
+        right now the path to the log file is *hardcoded* in `Logger`.
+        Let's make it more flexible!
+    question_steps:
+        - Give `Logger` a `__construct()` function.
+        - Allow the `$logPath` to be passed in as an argument to it.
+        - Set on a property (call the property `logPath`) the passed log path.
+        - Update `sendHappy.php` to pass the existing `__DIR__.'/debug.log'` path into the object.
+    step: injection-interfaces-inject-log-path-to-the-logger
+    files:
+        sendHappy.php: ~
+        Logger.php: ~
+        HappyMessageSender.php:
+            read_only: true
+        EmailAddressLoader.php:
+            read_only: true
+    features:
+        editor: ~
+        browser:
+            default_uri: sendHappy.php
+    grading: ~
+
+injectioninterfaces_interfacetypehintcoding:
+    question: |
+        Ah, new requirements! The `EmailAddressLoader` just returns
+        some hardcoded emails. That's ok for now. But eventually, you're
+        going to create a `DatabaseEmailAddressLoader` that will pull
+        the emails from the database.
+
+        In preparation for this, you've created a new interface called
+        `EmailLoaderInterface`.
+    question_steps:
+        - Update `EmailLoader` to implement `EmailLoaderInterface` interface.
+        - Change the type-hint in `HappyMessageSender` to allow *any* object that implements this interface.
+    step: injection-interfaces-interface-type-hint
+    files:
+        HappyMessageSender.php: ~
+        EmailAddressLoader.php: ~
+        sendHappy.php:
+            read_only: true
+        Logger.php:
+            read_only: true
+        EmailLoaderInterface:
+            read_only: true
+    features:
+        editor: ~
+        browser:
+            default_uri: sendHappy.php
+    grading: ~
+
+# Container
+container_moveservicecreationtocontainercoding:
+    question: |
+        Ok, it's time to get organized! You've already installed the
+        `pimple/pimple` library *and* created your `$container` variable.
+        Now, add two services to it.
+    question_steps:
+        - Add `email_loader` service for the `EmailAddressLoader` object.
+        - Add `happy_sender` service for the `HappyMessageSender` object.
+        - |
+          Then, simplify your code! At the bottom, get the `happy_sender` service
+          out of the container instead of creating it manually.
+    step: container-move-service-creation-ot-container
+    files:
+        sendHappy.php: ~
+        EmailAddressLoader.php:
+            read_only: true
+        HappyMessageSender.php:
+            read_only: true
+        EmailLoaderInterface:
+            read_only: true
+    features:
+        editor: ~
+        browser:
+            default_uri: sendHappy.php
+    grading: ~
+
+container_servicecreationbycontainermc:
+    question: |
+        Check out the following code:
+
+        ```php
+        use Pimple\Container;
+
+        $container = new Container();
+        $container['email_loader'] = function(Container $container) {
+            return new EmailAddressLoader();
+        };
+
+        $loader1 = $container['email_loader'];
+        $loader2 = $container['email_loader'];
+        ```
+
+        Which of the following is most accurate?
+    explanation: |
+        A container gives us two awesome things:
+
+        1. When you ask for `email_loader`, it is only ever created once
+        2. The `EmailAddressLoader` is *not* created until (and unless) we ask for the `email_loader` service.
+    features:
+        multiple_choice:
+            choices:
+                a: The `$loader1` and `$loader2` objects are the exact same object in memory.
+                b: |
+                   The container creates 2 new `EmailAddressLoader` objects: one each time
+                   we ask for the `email_loader` service.
+                c: |
+                   The container creates *one* `email_loader` object when the container is loaded,
+                   then returns just that one object each time we ask for the `email_loader` service.
+                d: |
+                   The container creates *zero* `EmailAddressLoader` objects: it doesn't create them
+                   until you actually call a method on the object.
+            correct: a
