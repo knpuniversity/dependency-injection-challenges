@@ -1,0 +1,12 @@
+diff --git a/EmailLoaderInterface.php b/EmailLoaderInterface.php
+new file mode 100644
+index 0000000..8717d0d
+--- /dev/null
++++ b/EmailLoaderInterface.php
+@@ -0,0 +1,6 @@
++<?php
++
++interface EmailLoaderInterface
++{
++    public function getAllEmails();
++}

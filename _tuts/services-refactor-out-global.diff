@@ -1,6 +1,6 @@
 diff --git a/EmailAddressLoader.php b/EmailAddressLoader.php
 new file mode 100644
-index 0000000..b759377
+index 0000000..b038988
 --- /dev/null
 +++ b/EmailAddressLoader.php
 @@ -0,0 +1,14 @@
@@ -11,11 +11,11 @@ index 0000000..b759377
 +    public function getAllEmails()
 +    {
 +        // a class to fake loading emails (e.g. from a database)
-+        return array(
++        return [
 +            'iluvhappyemails@symfony.com',
 +            'grumpy_dude@yahoo.com',
 +            'sunshine_gurl@gmail.com',
-+        );
++        ];
 +    }
 +}
 diff --git a/HappyMessageSender.php b/HappyMessageSender.php

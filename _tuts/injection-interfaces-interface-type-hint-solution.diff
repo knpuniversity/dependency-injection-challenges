@@ -1,0 +1,25 @@
+diff --git a/EmailAddressLoader.php b/EmailAddressLoader.php
+index b038988..63c0e70 100644
+--- a/EmailAddressLoader.php
++++ b/EmailAddressLoader.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-class EmailAddressLoader
++class EmailAddressLoader implements EmailLoaderInterface
+ {
+     public function getAllEmails()
+     {
+diff --git a/HappyMessageSender.php b/HappyMessageSender.php
+index 5774a0a..62776ce 100644
+--- a/HappyMessageSender.php
++++ b/HappyMessageSender.php
+@@ -6,7 +6,7 @@ class HappyMessageSender
+ 
+     private $logger;
+ 
+-    public function __construct(EmailAddressLoader $emailLoader, Logger $logger)
++    public function __construct(EmailLoaderInterface $emailLoader, Logger $logger)
+     {
+         $this->emailLoader = $emailLoader;
+         $this->logger = $logger;

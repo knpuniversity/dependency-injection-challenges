@@ -1,0 +1,30 @@
+diff --git a/Logger.php b/Logger.php
+new file mode 100644
+index 0000000..a0e823f
+--- /dev/null
++++ b/Logger.php
+@@ -0,0 +1,12 @@
++<?php
++
++class Logger
++{
++    public function logMessage($message)
++    {
++        $logPath = __DIR__.'/debug.log';
++
++        $fh = fopen($logPath, 'a');
++        fwrite($fh, $message.PHP_EOL);
++    }
++}
+diff --git a/sendHappy.php b/sendHappy.php
+index bd8d280..d4c0d72 100644
+--- a/sendHappy.php
++++ b/sendHappy.php
+@@ -2,6 +2,7 @@
+ 
+ require_once 'EmailAddressLoader.php';
+ require_once 'HappyMessageSender.php';
++require_once 'Logger.php';
+ 
+ $emailLoader = new EmailAddressLoader();
+ $happyMessageSender = new HappyMessageSender($emailLoader);

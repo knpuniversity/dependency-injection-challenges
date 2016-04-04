@@ -1,0 +1,39 @@
+diff --git a/HappyMessageSender.php b/HappyMessageSender.php
+index 0e61e29..5774a0a 100644
+--- a/HappyMessageSender.php
++++ b/HappyMessageSender.php
+@@ -4,9 +4,12 @@ class HappyMessageSender
+ {
+     private $emailLoader;
+ 
+-    public function __construct(EmailAddressLoader $emailLoader)
++    private $logger;
++
++    public function __construct(EmailAddressLoader $emailLoader, Logger $logger)
+     {
+         $this->emailLoader = $emailLoader;
++        $this->logger = $logger;
+     }
+ 
+     public function sendHappiness()
+@@ -15,6 +18,7 @@ class HappyMessageSender
+         foreach ($emails as $email) {
+             // just print for testing
+             echo 'I hope you\'re having a GREAT day '.$email.'<hr/>';
++            $this->logger->logMessage($email);
+         }
+     }
+ }
+diff --git a/sendHappy.php b/sendHappy.php
+index d4c0d72..135c3f2 100644
+--- a/sendHappy.php
++++ b/sendHappy.php
+@@ -5,6 +5,7 @@ require_once 'HappyMessageSender.php';
+ require_once 'Logger.php';
+ 
+ $emailLoader = new EmailAddressLoader();
+-$happyMessageSender = new HappyMessageSender($emailLoader);
++$logger = new Logger();
++$happyMessageSender = new HappyMessageSender($emailLoader, $logger);
+ 
+ $happyMessageSender->sendHappiness();

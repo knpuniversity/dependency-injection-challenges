@@ -14,7 +14,47 @@
             "id": "services-refactor-out-global-solution",
             "name": "Services: Refactor out global (solution)",
             "description": null
+        },
+        {
+            "id": "injection-interfaces-inject-logger",
+            "name": "Injection interfaces: Inject logger",
+            "description": null
+        },
+        {
+            "id": "injection-interfaces-inject-logger-solution",
+            "name": "Injection interfaces: Inject logger [Solution]",
+            "description": null
+        },
+        {
+            "id": "injection-interfaces-inject-log-path-to-the-logger",
+            "name": "Injection interfaces: Inject log path to the logger",
+            "description": null
+        },
+        {
+            "id": "injection-interfaces-inject-log-path-to-the-logger-solution",
+            "name": "Injection interfaces: Inject log path to the logger [Solution]",
+            "description": null
+        },
+        {
+            "id": "injection-interfaces-interface-type-hint",
+            "name": "Injection interfaces: Interface type hint",
+            "description": null
+        },
+        {
+            "id": "injection-interfaces-interface-type-hint-solution",
+            "name": "Injection interfaces: Interface type hint [Solution]",
+            "description": null
+        },
+        {
+            "id": "container-move-service-creation-ot-container",
+            "name": "Container: Move service creation ot container",
+            "description": null
+        },
+        {
+            "id": "container-move-service-creation-ot-container-solution",
+            "name": "Container: Move service creation ot container [Solution]",
+            "description": null
         }
     ],
-    "sha": "742153100305e59e6b9bf43d9f799a19543d3dd5"
+    "sha": "874361b0357b42faf89687516b10ceb3caf2afe5"
 }
