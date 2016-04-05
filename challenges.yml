@@ -97,7 +97,51 @@ injectioninterfaces_injectloggercoding:
         editor: ~
         browser:
             default_uri: sendHappy.php
-    grading: ~
+    grading:
+        look_for_new_logger:
+            type: php
+            assertTrue: inputContains('sendHappy.php', 'new Logger')
+            failure: Be sure to create an instance of the `Logger` class in `sendHappy.php`
+        look_for_no_global:
+            type: php
+            assertFalse: inputContains('HappyMessageSender.php', 'global')
+            failure: Remove the `global` from `HappyMessageSender` by passing the `$emailLoader` and `$logger` through the `__construct()` function
+        look_for_constructor:
+            type: php
+            assertTrue: class('HappyMessageSender').hasConstructor()
+            failure: Be sure that a `__construct()` method in the `HappyMessageSender` is exist.
+        assert_number_of_parameter:
+            type: php
+            assertTrue: class('HappyMessageSender').getConstructor().getNumberOfRequiredParameters() == 2
+            failure: Be sure to add a `__construct()` method to `HappyMessageSender` with an `$emailLoader` as a first and `$logger` as a second required argument.
+        assert_1st_parameter:
+            type: php
+            assertTrue: class('HappyMessageSender').getConstructor().getParameter(1).getName() == 'emailLoader'
+            failure: Be sure to add a `__construct()` method to `HappyMessageSender` with an `$emailLoader` as a first and `$logger` as a second required argument.
+        assert_2nd_parameter:
+            type: php
+            assertTrue: class('HappyMessageSender').getConstructor().getParameter(2).getName() == 'logger'
+            failure: Be sure to add a `__construct()` method to `HappyMessageSender` with an `$emailLoader` as a first and `$logger` as a second required argument.
+        assert_1nd_parameter_typehint:
+            type: php
+            assertTrue: class('HappyMessageSender').getConstructor().getParameterClass(1).getName() == 'EmailAddressLoader'
+            failure: Be sure to add `EmailAddressLoader` type hint for first argument of `__construct()` method in the `HappyMessageSender` class.
+        assert_2nd_parameter_typehint:
+            type: php
+            assertTrue: class('HappyMessageSender').getConstructor().getParameterClass(2).getName() == 'Logger'
+            failure: Be sure to add `Logger` type hint for second argument of `__construct()` method in the `HappyMessageSender` class.
+        look_for_log_message:
+            type: php
+            assertTrue: inputContains('HappyMessageSender.php', '->logMessage')
+            failure: Be sure to log the email address of each person you're greeting inside the `foreach` in `HappyMessageSender::sendHappiness()`.
+        look_for_text:
+            type: http
+            assertTrue: body() matches '/GREAT day/'
+            failure: I don't see the "I hope you're having a GREAT day" message being printed!?
+        look_for_email:
+            type: http
+            assertTrue: body() matches '/iluvhappyemails@symfony.com/'
+            failure: I don't see the "iluvhappyemails@symfony.com" email being printed!?
 
 injectioninterfaces_injectlogpathtotheloggercoding:
     question: |
@@ -195,7 +239,7 @@ container_servicecreationbycontainermc:
         $loader2 = $container['email_loader'];
         ```
 
-        Which of the following is most accurate?
+        Which of the following is the most accurate?
     explanation: |
         A container gives us two awesome things:
 
