@@ -166,7 +166,43 @@ injectioninterfaces_injectlogpathtotheloggercoding:
         editor: ~
         browser:
             default_uri: sendHappy.php
-    grading: ~
+    grading:
+        look_for_no_global:
+            type: php
+            assertFalse: inputContains('HappyMessageSender.php', 'global')
+            failure: Remove the `global` from `HappyMessageSender` by passing the `$emailLoader` and `$logger` through the `__construct()` function
+        look_for_property:
+            type: php
+            assertTrue: class('Logger').hasProperty('logPath')
+            failure: The `logPath` property not found in the `Logger` class. Did you create it?
+        assert_property_is_private:
+            type: php
+            assertTrue: class('Logger').getProperty('logPath').isPrivate()
+            failure: Lets make a `logPath` property `private`. We *really* don't want to be able to override it outside of the `Logger` class in this case.
+        look_for_constructor:
+            type: php
+            assertTrue: class('Logger').hasConstructor()
+            failure: Seems you don't add a `__construct()` method in the `Logger` class. Lets create it!
+        assert_number_of_parameter:
+            type: php
+            assertTrue: class('Logger').getConstructor().getNumberOfRequiredParameters() == 1
+            failure: You should get a `$logPath` as a first required argument in `__construct()` method of the `Logger` class.
+        assert_1st_parameter_name:
+            type: php
+            assertTrue: class('Logger').getConstructor().getParameter(1).getName() == 'logPath'
+            failure: You should get a `$logPath` as a first required argument in `__construct()` method of the `Logger` class.
+        look_for_property_usage:
+            type: php
+            assertTrue: inputContains('Logger.php', '$this->logPath')
+            failure: Be sure to use `logPath` property in the `Logger` class.
+        look_for_text:
+            type: http
+            assertTrue: body() matches '/GREAT day/'
+            failure: I don't see the "I hope you're having a GREAT day" message being printed!?
+        look_for_email:
+            type: http
+            assertTrue: body() matches '/iluvhappyemails@symfony.com/'
+            failure: I don't see the "iluvhappyemails@symfony.com" email being printed!?
 
 injectioninterfaces_interfacetypehintcoding:
     question: |
@@ -194,7 +230,35 @@ injectioninterfaces_interfacetypehintcoding:
         editor: ~
         browser:
             default_uri: sendHappy.php
-    grading: ~
+    grading:
+        look_for_no_global:
+            type: php
+            assertFalse: inputContains('HappyMessageSender.php', 'global')
+            failure: Remove the `global` from `HappyMessageSender` by passing the `$emailLoader` and `$logger` through the `__construct()` function
+        look_for_interface:
+            type: php
+            assertTrue: class('EmailAddressLoader').implementsInterface('EmailLoaderInterface')
+            failure: The `EmailAddressLoader` class should implement the `EmailLoaderInterface` interface.
+        look_for_constructor:
+            type: php
+            assertTrue: class('HappyMessageSender').hasConstructor()
+            failure: Unable to find `__construct()` method in the `HappyMessageSender` class. Did you remove it?
+        assert_number_of_parameter:
+            type: php
+            assertTrue: class('HappyMessageSender').getConstructor().getNumberOfRequiredParameters() == 1
+            failure: You should change type hint of `$emailLoader` first required parameter to the `EmailLoaderInterface` interface in `HappyMessageSender::__construct()`.
+        assert_1st_parameter_type:
+            type: php
+            assertTrue: class('HappyMessageSender').getConstructor().getParameterClass(1).getName() == 'EmailLoaderInterface'
+            failure: You should change type hint of `$emailLoader` first required parameter to the `EmailLoaderInterface` interface in `HappyMessageSender::__construct()`.
+        look_for_text:
+            type: http
+            assertTrue: body() matches '/GREAT day/'
+            failure: I don't see the "I hope you're having a GREAT day" message being printed!?
+        look_for_email:
+            type: http
+            assertTrue: body() matches '/iluvhappyemails@symfony.com/'
+            failure: I don't see the "iluvhappyemails@symfony.com" email being printed!?
 
 # Container
 container_moveservicecreationtocontainercoding:
@@ -215,13 +279,41 @@ container_moveservicecreationtocontainercoding:
             read_only: true
         HappyMessageSender.php:
             read_only: true
-        EmailLoaderInterface:
+        EmailLoaderInterface.php:
             read_only: true
     features:
         editor: ~
         browser:
             default_uri: sendHappy.php
-    grading: ~
+    grading:
+        look_for_no_global:
+            type: php
+            assertFalse: inputContains('HappyMessageSender.php', 'global')
+            failure: Remove the `global` from `HappyMessageSender` by passing the `$emailLoader` and `$logger` through the `__construct()` function
+        look_for_service_1:
+            type: php
+            assertTrue: inputContains('sendHappy.php', 'email_loader')
+            failure: Unable to find `email_loader` service. Did you create it?
+        look_for_service_2:
+            type: php
+            assertTrue: inputContains('sendHappy.php', 'happy_sender')
+            failure: Unable to find `happy_sender` service. Did you create it?
+        assert_subclass_1:
+            type: php
+            assertTrue: is_subclass_of(variable('container')['email_loader'], '\EmailAddressLoader')
+            failure: Seems `email_loader` service isn't an instance of the `EmailAddressLoader` class. Check your declaration of this service.
+        assert_subclass_2:
+            type: php
+            assertTrue: is_subclass_of(variable('container')['happy_sender'], '\HappyMessageSender')
+            failure: Seems `happy_sender` service isn't an instance of the `HappyMessageSender` class. Check your declaration of this service.
+        look_for_text:
+            type: http
+            assertTrue: body() matches '/GREAT day/'
+            failure: I don't see the "I hope you're having a GREAT day" message being printed!?
+        look_for_email:
+            type: http
+            assertTrue: body() matches '/iluvhappyemails@symfony.com/'
+            failure: I don't see the "iluvhappyemails@symfony.com" email being printed!?
 
 container_servicecreationbycontainermc:
     question: |
