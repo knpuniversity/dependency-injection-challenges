@@ -1,8 +1,8 @@
 diff --git a/sendHappy.php b/sendHappy.php
-index fb54171..10d5eb7 100644
+index 420f9c8..9534b3a 100644
 --- a/sendHappy.php
 +++ b/sendHappy.php
-@@ -9,7 +9,14 @@ use Pimple\Container;
+@@ -10,7 +10,14 @@ use Pimple\Container;
  
  $container = new Container();
  
