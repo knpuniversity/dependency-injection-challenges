@@ -114,13 +114,11 @@ index 0000000..632ac07
 +    "platform-dev": []
 +}
 diff --git a/sendHappy.php b/sendHappy.php
-index a6f21e8..420f9c8 100644
+index 2fc4c21..420f9c8 100644
 --- a/sendHappy.php
 +++ b/sendHappy.php
-@@ -1,11 +1,16 @@
- <?php
- 
-+require_once 'EmailLoaderInterface.php';
+@@ -3,10 +3,14 @@
+ require_once 'EmailLoaderInterface.php';
  require_once 'EmailAddressLoader.php';
  require_once 'HappyMessageSender.php';
 -require_once 'Logger.php';

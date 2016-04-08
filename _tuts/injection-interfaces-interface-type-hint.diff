@@ -10,3 +10,14 @@ index 0000000..8717d0d
 +{
 +    public function getAllEmails();
 +}
+diff --git a/sendHappy.php b/sendHappy.php
+index a6f21e8..2fc4c21 100644
+--- a/sendHappy.php
++++ b/sendHappy.php
+@@ -1,5 +1,6 @@
+ <?php
+ 
++require_once 'EmailLoaderInterface.php';
+ require_once 'EmailAddressLoader.php';
+ require_once 'HappyMessageSender.php';
+ require_once 'Logger.php';
