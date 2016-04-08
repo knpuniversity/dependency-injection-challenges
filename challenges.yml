@@ -224,7 +224,7 @@ injectioninterfaces_interfacetypehintcoding:
             read_only: true
         Logger.php:
             read_only: true
-        EmailLoaderInterface:
+        EmailLoaderInterface.php:
             read_only: true
     features:
         editor: ~
@@ -243,10 +243,6 @@ injectioninterfaces_interfacetypehintcoding:
             type: php
             assertTrue: class('HappyMessageSender').hasConstructor()
             failure: Unable to find `__construct()` method in the `HappyMessageSender` class. Did you remove it?
-        assert_number_of_parameter:
-            type: php
-            assertTrue: class('HappyMessageSender').getConstructor().getNumberOfRequiredParameters() == 1
-            failure: You should change type hint of `$emailLoader` first required parameter to the `EmailLoaderInterface` interface in `HappyMessageSender::__construct()`.
         assert_1st_parameter_type:
             type: php
             assertTrue: class('HappyMessageSender').getConstructor().getParameterClass(1).getName() == 'EmailLoaderInterface'
@@ -300,11 +296,11 @@ container_moveservicecreationtocontainercoding:
             failure: Unable to find `happy_sender` service. Did you create it?
         assert_subclass_1:
             type: php
-            assertTrue: is_subclass_of(variable('container')['email_loader'], '\EmailAddressLoader')
+            assertTrue: get_class(variable('container')['email_loader']) == 'EmailAddressLoader'
             failure: Seems `email_loader` service isn't an instance of the `EmailAddressLoader` class. Check your declaration of this service.
         assert_subclass_2:
             type: php
-            assertTrue: is_subclass_of(variable('container')['happy_sender'], '\HappyMessageSender')
+            assertTrue: get_class(variable('container')['happy_sender']) == 'HappyMessageSender'
             failure: Seems `happy_sender` service isn't an instance of the `HappyMessageSender` class. Check your declaration of this service.
         look_for_text:
             type: http
