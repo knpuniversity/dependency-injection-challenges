@@ -24,7 +24,7 @@ services_refactoroutglobalcoding:
         look_for_global:
             type: php
             assertFalse: inputContains("HappyMessageSender.php", "global")
-            failure: Remove the `global` from `HappyMessageSender` class by passing the `$emailLoader` through the `__construct()` method.
+            failure: Remove the `global` from the `HappyMessageSender` class by passing the `$emailLoader` through the `__construct()` method.
         look_for_constructor:
             type: php
             assertTrue: reflection_class('\HappyMessageSender').hasMethod('__construct')
@@ -36,7 +36,7 @@ services_refactoroutglobalcoding:
         assert_parameter_name:
             type: php
             assertTrue: reflection_class('\HappyMessageSender').getMethod('__construct').getParameters()[0].getName() == 'emailLoader'
-            failure: Though you can really call it anything, let's call the argument to `__construct()` method of `HappyMessageSender` class `$emailLoader` for clarity.
+            failure: Though you can really call it anything, let's call the argument to the `__construct()` method (of `HappyMessageSender`) `$emailLoader` for clarity.
         look_for_text:
             type: http
             assertTrue: body() matches "/GREAT day/"
@@ -56,7 +56,7 @@ services_whatswrongwithglobalmc:
         "But wait!" - he says - "What's so wrong with using
         globals? My code was a lot easier before!".
     explanation: |
-        The only true statement is (B): globals makes your code difficult
+        The only true statement is (B): globals make your code difficult
         to debug, understand and maintain. When using `global $emailLoader`,
         it's not clear where this is created or who created it. And what's
         worse, in a different file, you may innocently rename or remove
@@ -109,27 +109,27 @@ injectioninterfaces_injectloggercoding:
         look_for_constructor:
             type: php
             assertTrue: class('HappyMessageSender').hasConstructor()
-            failure: Be sure that a `__construct()` method in the `HappyMessageSender` is exist.
+            failure: Be sure that a `__construct()` method in the `HappyMessageSender` exists.
         assert_number_of_parameter:
             type: php
             assertTrue: class('HappyMessageSender').getConstructor().getNumberOfRequiredParameters() == 2
-            failure: Be sure to add a `__construct()` method to `HappyMessageSender` with an `$emailLoader` as a first and `$logger` as a second required argument.
+            failure: Be sure to add a `__construct()` method to `HappyMessageSender` with `$emailLoader` as the first argument and `$logger` as the second required argument.
         assert_1st_parameter:
             type: php
             assertTrue: class('HappyMessageSender').getConstructor().getParameter(1).getName() == 'emailLoader'
-            failure: Be sure to add a `__construct()` method to `HappyMessageSender` with an `$emailLoader` as a first and `$logger` as a second required argument.
+            failure: Be sure to add a `__construct()` method to `HappyMessageSender` with `$emailLoader` as the first argument and `$logger` as the second required argument.
         assert_2nd_parameter:
             type: php
             assertTrue: class('HappyMessageSender').getConstructor().getParameter(2).getName() == 'logger'
-            failure: Be sure to add a `__construct()` method to `HappyMessageSender` with an `$emailLoader` as a first and `$logger` as a second required argument.
+            failure: Be sure to add a `__construct()` method to `HappyMessageSender` with `$emailLoader` as the first argument and `$logger` as the second required argument.
         assert_1nd_parameter_typehint:
             type: php
             assertTrue: class('HappyMessageSender').getConstructor().getParameterClass(1).getName() == 'EmailAddressLoader'
-            failure: Be sure to add `EmailAddressLoader` type hint for first argument of `__construct()` method in the `HappyMessageSender` class.
+            failure: Be sure to add the `EmailAddressLoader` "type hint" for the first argument `__construct()` in the `HappyMessageSender` class.
         assert_2nd_parameter_typehint:
             type: php
             assertTrue: class('HappyMessageSender').getConstructor().getParameterClass(2).getName() == 'Logger'
-            failure: Be sure to add `Logger` type hint for second argument of `__construct()` method in the `HappyMessageSender` class.
+            failure: Be sure to add the `Logger` "type hint" for the second argument of `__construct()` in the `HappyMessageSender` class.
         look_for_log_message:
             type: php
             assertTrue: inputContains('HappyMessageSender.php', '->logMessage')
@@ -152,7 +152,7 @@ injectioninterfaces_injectlogpathtotheloggercoding:
     question_steps:
         - Give `Logger` a `__construct()` function.
         - Allow the `$logPath` to be passed in as an argument to it.
-        - Set on a property (call the property `logPath`) the passed log path.
+        - Set this on a property (call the property `logPath`).
         - Update `sendHappy.php` to pass the existing `__DIR__.'/debug.log'` path into the object.
     step: injection-interfaces-inject-log-path-to-the-logger
     files:
@@ -174,27 +174,27 @@ injectioninterfaces_injectlogpathtotheloggercoding:
         look_for_property:
             type: php
             assertTrue: class('Logger').hasProperty('logPath')
-            failure: The `logPath` property not found in the `Logger` class. Did you create it?
+            failure: The `logPath` property was not found in the `Logger` class. Did you create it?
         assert_property_is_private:
             type: php
             assertTrue: class('Logger').getProperty('logPath').isPrivate()
-            failure: Lets make a `logPath` property `private`. We *really* don't want to be able to override it outside of the `Logger` class in this case.
+            failure: Make the `logPath` property `private`. We don't need to be able to access or set it from outside of the `Logger` class.
         look_for_constructor:
             type: php
             assertTrue: class('Logger').hasConstructor()
-            failure: Seems you don't add a `__construct()` method in the `Logger` class. Lets create it!
+            failure: It seems you didn't add a `__construct()` method in the `Logger` class. Let's create it!
         assert_number_of_parameter:
             type: php
             assertTrue: class('Logger').getConstructor().getNumberOfRequiredParameters() == 1
-            failure: You should get a `$logPath` as a first required argument in `__construct()` method of the `Logger` class.
+            failure: You should have `$logPath` as the first required argument in the `__construct()` method of the `Logger` class.
         assert_1st_parameter_name:
             type: php
             assertTrue: class('Logger').getConstructor().getParameter(1).getName() == 'logPath'
-            failure: You should get a `$logPath` as a first required argument in `__construct()` method of the `Logger` class.
+            failure: You should have `$logPath` as the first required argument in the `__construct()` method of the `Logger` class.
         look_for_property_usage:
             type: php
             assertTrue: inputContains('Logger.php', '$this->logPath')
-            failure: Be sure to use `logPath` property in the `Logger` class.
+            failure: Be sure to use the `logPath` property (i.e. `$this->logPath`) in the `Logger` class.
         look_for_text:
             type: http
             assertTrue: body() matches '/GREAT day/'
@@ -214,7 +214,7 @@ injectioninterfaces_interfacetypehintcoding:
         In preparation for this, you've created a new interface called
         `EmailLoaderInterface`.
     question_steps:
-        - Update `EmailLoader` to implement `EmailLoaderInterface` interface.
+        - Update `EmailLoader` to implement the `EmailLoaderInterface` interface.
         - Change the type-hint in `HappyMessageSender` to allow *any* object that implements this interface.
     step: injection-interfaces-interface-type-hint
     files:
@@ -242,11 +242,11 @@ injectioninterfaces_interfacetypehintcoding:
         look_for_constructor:
             type: php
             assertTrue: class('HappyMessageSender').hasConstructor()
-            failure: Unable to find `__construct()` method in the `HappyMessageSender` class. Did you remove it?
+            failure: Unable to find the `__construct()` method in the `HappyMessageSender` class. Did you remove it?
         assert_1st_parameter_type:
             type: php
             assertTrue: class('HappyMessageSender').getConstructor().getParameterClass(1).getName() == 'EmailLoaderInterface'
-            failure: You should change type hint of `$emailLoader` first required parameter to the `EmailLoaderInterface` interface in `HappyMessageSender::__construct()`.
+            failure: You should change the type hint for `$emailLoader` in `HappyMessageSender::__construct()` to be the `EmailLoaderInterface`.
         look_for_text:
             type: http
             assertTrue: body() matches '/GREAT day/'
@@ -263,8 +263,8 @@ container_moveservicecreationtocontainercoding:
         `pimple/pimple` library *and* created your `$container` variable.
         Now, add two services to it.
     question_steps:
-        - Add `email_loader` service for the `EmailAddressLoader` object.
-        - Add `happy_sender` service for the `HappyMessageSender` object.
+        - Add the `email_loader` service for the `EmailAddressLoader` object.
+        - Add the `happy_sender` service for the `HappyMessageSender` object.
         - |
           Then, simplify your code! At the bottom, get the `happy_sender` service
           out of the container instead of creating it manually.
@@ -285,23 +285,23 @@ container_moveservicecreationtocontainercoding:
         look_for_no_global:
             type: php
             assertFalse: inputContains('HappyMessageSender.php', 'global')
-            failure: Remove the `global` from `HappyMessageSender` by passing the `$emailLoader` and `$logger` through the `__construct()` function
+            failure: Remove the `global` from `HappyMessageSender` by passing the `$emailLoader` and `$logger` through the `__construct()` function.
         look_for_service_1:
             type: php
             assertTrue: inputContains('sendHappy.php', 'email_loader')
-            failure: Unable to find `email_loader` service. Did you create it?
+            failure: Unable to find the `email_loader` service. Did you create it?
         look_for_service_2:
             type: php
             assertTrue: inputContains('sendHappy.php', 'happy_sender')
-            failure: Unable to find `happy_sender` service. Did you create it?
+            failure: Unable to find the `happy_sender` service. Did you create it?
         assert_subclass_1:
             type: php
             assertTrue: get_class(variable('container')['email_loader']) == 'EmailAddressLoader'
-            failure: Seems `email_loader` service isn't an instance of the `EmailAddressLoader` class. Check your declaration of this service.
+            failure: It seems the `email_loader` service isn't an instance of the `EmailAddressLoader` class. Check your declaration of this service.
         assert_subclass_2:
             type: php
             assertTrue: get_class(variable('container')['happy_sender']) == 'HappyMessageSender'
-            failure: Seems `happy_sender` service isn't an instance of the `HappyMessageSender` class. Check your declaration of this service.
+            failure: It seems the `happy_sender` service isn't an instance of the `HappyMessageSender` class. Check your declaration of this service.
         look_for_text:
             type: http
             assertTrue: body() matches '/GREAT day/'
