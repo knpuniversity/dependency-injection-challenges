@@ -297,7 +297,7 @@ container_moveservicecreationtocontainercoding:
         check_service_1:
             type: php
             assertTrue: variable('container').offsetExists('email_loader')
-            failure: It seems the `email_loader` service not exist. Check your declaration of this service.
+            failure: It seems the `email_loader` service does not exist. Check your declaration of this service.
         assert_subclass_1:
             type: php
             assertTrue: get_class(variable('container')['email_loader']) == 'EmailAddressLoader'
@@ -305,7 +305,7 @@ container_moveservicecreationtocontainercoding:
         check_service_2:
             type: php
             assertTrue: variable('container').offsetExists('happy_sender')
-            failure: It seems the `happy_sender` service not exist. Check your declaration of this service.
+            failure: It seems the `happy_sender` service does not exist. Check your declaration of this service.
         assert_subclass_2:
             type: php
             assertTrue: get_class(variable('container')['happy_sender']) == 'HappyMessageSender'
