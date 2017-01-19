@@ -259,9 +259,24 @@ injectioninterfaces_interfacetypehintcoding:
 # Container
 container_moveservicecreationtocontainercoding:
     question: |
-        Ok, it's time to get organized! You've already installed the
-        `pimple/pimple` library *and* created your `$container` variable.
+        Ok, it's time to get organized! You've already installed the `pimple/pimple`
+        library which has version 3.0 *and* created your `$container` variable.
         Now, add two services to it.
+        
+        ***TIP
+        Keep in mind, that since Pimple 2.0 you don't have to wrap your anonymous
+        function with the `share()` method anymore:
+        
+        ```php
+        $container = new Container();
+        $container['mailer'] = function() {
+            return new Mailer();
+        };
+        ```
+
+        The `mailer` service will be created only once on the first call no matter
+        how many times you'll call it.
+        ***
     question_steps:
         - Add the `email_loader` service for the `EmailAddressLoader` object.
         - Add the `happy_sender` service for the `HappyMessageSender` object.
