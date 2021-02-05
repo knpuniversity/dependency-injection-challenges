@@ -214,7 +214,7 @@ injectioninterfaces_interfacetypehintcoding:
         In preparation for this, you've created a new interface called
         `EmailLoaderInterface`.
     question_steps:
-        - Update `EmailLoader` to implement the `EmailLoaderInterface` interface.
+        - Update `EmailAddressLoader` to implement the `EmailLoaderInterface` interface.
         - Change the type-hint in `HappyMessageSender` to allow *any* object that implements this interface.
     step: injection-interfaces-interface-type-hint
     files:
